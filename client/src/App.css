@@ -11,7 +11,7 @@
 .App {
   margin: 0;
   padding: 0;
-  background-image: linear-gradient(to top, #1e3c72 0%, #1e3c72 1%, #2a5298 100%);
+background-image: linear-gradient(-20deg, #d558c8 0%, #24d292 100%);
   position: fixed;
   width: 100vw;
   height: 100vh;
@@ -27,16 +27,19 @@
   width: 100vw;
   display: flex;
   justify-content: center;
+  align-items: center;
   margin-top: 20px;
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   letter-spacing: 2px;
+  color: #393D3F;
+  font-weight: 600;
+ height: 50px;
 }
 
 /* Title ends */
 
 /* Input */
 .input-cont {
-  margin-top: 10px;
   font-size: 1.2rem;
   letter-spacing: 2px;
   display: flex;
@@ -48,6 +51,9 @@
 
 .input-cont input {
   width: 90px;
+  padding: 5px;
+  border-radius: 2px;
+  border: none;
 }
 
 .add {
@@ -57,8 +63,10 @@
 }
 
 .warning {
-  color: #C33C54;
-  font-size: 1rem;
+  color: #fff;
+  font-size: 0.8rem;
+  background-color: #C33C54;
+  text-align: center;
 }
 /* Input Ends*/
 
@@ -66,7 +74,7 @@
 
 .listOfCoord {
   position: absolute;
-  top: 160px;
+  top: 180px;
 }
 
 li {
@@ -85,8 +93,31 @@ ul {
   color: black;
 }
 
-.xCol {
-  width: 300px;
+.Col {
+  width: 33.33%;
+}
+.save {
+  background-color: #3EC09A;
+  border: none;
+  color: white;
+  padding: 5px;
+  cursor: pointer;
+}
+.listCont {
+  width: 400px;
+  height: 30px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.remove {
+  cursor: pointer;
+  background-color: #C33C54;
+  color: white;
+  border: none;
+  padding: 5px;
+  border-radius: 2px;
 }
 
 /* Liest Ends */

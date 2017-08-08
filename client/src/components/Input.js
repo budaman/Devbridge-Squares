@@ -21,21 +21,30 @@ class Input extends Component {
     }
     value = (parseInt(e.target.value,10))
     isNotNaN = !isNaN(value)
+  console.log(!isNaN(value))
     if(isItInt===true && isNotNaN ===true) {
       this.setState({correctType: true})
-    this.setState(()=>{
-             var newState = {};
-             newState[id + 'Value'] = value
-             return newState
-          })
-        }else {
-          this.setState({correctType: false})
+      this.setState(()=>{
+               var newState = {};
+               newState[id + 'Value'] = value
+               return newState
+            })
         }
+        else {
+          this.setState({correctType: false})
+          this.setState(()=>{
+                   var newState = {};
+                   newState[id + 'Value'] = ""
+                   return newState
+                })
+        }
+
   }
 
   handleClick = () => {
-    var coord = this.state.coord;
-    coord.push({x: this.state.xValue, y: this.state.yValue, id: this.state.xValue})
+    let coord = this.state.coord;
+    let id = this.state.xValue + "" + this.state.yValue
+    coord.push({x: this.state.xValue, y: this.state.yValue, id: id})
     this.setState({
       coord: coord,
       xValue: "",
@@ -44,7 +53,6 @@ class Input extends Component {
   }
 
   render() {
-    console.log(this.state.coord)
     let correctType = this.state.correctType
     let alert = false
     let addButton = false
@@ -63,14 +71,20 @@ class Input extends Component {
     }
 
     const list = this.state.coord.map((list,id)=>{
+      console.log(list)
       return (
-        <li key={list.x}>
-          <span className="xCol">{"x: " + list.x}</span>
-          <span className="yCol">{"y: " + list.y}</span>
-          <button>delete</button>
+        <li
+          key={list.x}
+          className="listCont"
+          >
+          <span className="Col">{"x: " + list.x}</span>
+          <span className="Col">{"y: " + list.y}</span>
+          <button className="remove">remove</button>
         </li>
     )
     })
+    console.log(this.state.xValue)
+
     return (
       <div className="input-cont">
           <div className="input-field">
@@ -84,9 +98,9 @@ class Input extends Component {
             onChange={this.handleChange}
             value={this.state.xValue}
           />
-          <label
-            htmlFor="y"
-          > Y: </label>
+            <label
+              htmlFor="y"
+            > Y: </label>
           <input
             id="y"
             type="number"
@@ -107,6 +121,7 @@ class Input extends Component {
         <div className="listOfCoord">
           <ul className="ul-list">
           {list}
+          <button className="save">save</button>
           </ul>
         </div>
       </div>

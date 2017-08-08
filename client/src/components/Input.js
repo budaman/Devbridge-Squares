@@ -3,8 +3,8 @@ import React, { Component } from 'react'
 
 class Input extends Component {
   state = {
-    xValue: NaN,
-    yValue: NaN,
+    xValue: "",
+    yValue: "",
     alert: false,
     coord: [],
     correctType: true
@@ -21,9 +21,6 @@ class Input extends Component {
     }
     value = (parseInt(e.target.value,10))
     isNotNaN = !isNaN(value)
-
-    console.log(isItInt + ' ' + isNotNaN)
-
     if(isItInt===true && isNotNaN ===true) {
       this.setState({correctType: true})
     this.setState(()=>{
@@ -36,9 +33,21 @@ class Input extends Component {
         }
   }
 
+  handleClick = () => {
+    var coord = this.state.coord;
+    coord.push({x: this.state.xValue, y: this.state.yValue, id: this.state.xValue})
+    this.setState({
+      coord: coord,
+      xValue: "",
+      yValue: ""
+    })
+  }
+
   render() {
+    console.log(this.state.coord)
     let correctType = this.state.correctType
     let alert = false
+    let addButton = false
     if((this.state.xValue > 5000) ||
     (this.state.xValue < -5000) ||
     (this.state.yValue > 5000) ||
@@ -48,6 +57,20 @@ class Input extends Component {
      } else {
       alert = false
     }
+
+    if(alert===false && correctType ===true &&  this.state.xValue!=="" && this.state.yValue !=="") {
+      addButton = true
+    }
+
+    const list = this.state.coord.map((list,id)=>{
+      return (
+        <li key={list.x}>
+          <span className="xCol">{"x: " + list.x}</span>
+          <span className="yCol">{"y: " + list.y}</span>
+          <button>delete</button>
+        </li>
+    )
+    })
     return (
       <div className="input-cont">
           <div className="input-field">
@@ -59,6 +82,7 @@ class Input extends Component {
             type="number"
             placeholder="x coordinate"
             onChange={this.handleChange}
+            value={this.state.xValue}
           />
           <label
             htmlFor="y"
@@ -68,12 +92,22 @@ class Input extends Component {
             type="number"
             placeholder="y coordinate"
             onChange={this.handleChange}
+            value={this.state.yValue}
           />
-          <button className="add">Add</button>
+
         </div>
+        { (addButton) && <button
+          className="add"
+          onClick={this.handleClick}
+          >Add</button>}
         <div >
         {(alert)  && <p className="warning">Numbers of interval shoud be between -5000 and 5000</p>}
         {(!correctType)  && <p className="warning">Coordinates should be set as an integer</p>}
+        </div>
+        <div className="listOfCoord">
+          <ul className="ul-list">
+          {list}
+          </ul>
         </div>
       </div>
     );

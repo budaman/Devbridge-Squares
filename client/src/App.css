@@ -6,6 +6,8 @@
    font-family: 'Montserrat', sans-serif;
 }
 
+
+
 .App {
   margin: 0;
   padding: 0;
@@ -50,6 +52,7 @@
 
 .add {
   margin-left: 20px;
+  margin-top: 20px;
   cursor: pointer;
 }
 
@@ -58,3 +61,32 @@
   font-size: 1rem;
 }
 /* Input Ends*/
+
+/* list */
+
+.listOfCoord {
+  position: absolute;
+  top: 160px;
+}
+
+li {
+  list-style-type: none;
+  background-color: white;
+  margin: 0;
+  padding: 0;
+}
+
+ul {
+  padding: 0;
+  margin: 0;
+}
+
+.ul-list {
+  color: black;
+}
+
+.xCol {
+  width: 300px;
+}
+
+/* Liest Ends */

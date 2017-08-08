@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css?family=Fresca|Raleway|Roboto');
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+
+#root {
+   font-family: 'Roboto', sans-serif;
+   font-family: 'Montserrat', sans-serif;
+}
+
+.App {
+  margin: 0;
+  padding: 0;
+  background-image: linear-gradient(to top, #1e3c72 0%, #1e3c72 1%, #2a5298 100%);
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  color: white;
+}
+
+
+
+/* Title */
+
+.title {
+  display: flex;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  font-size: 1.2rem;
+  letter-spacing: 2px;
+}
+
+/* Title ends */
+
+/* Input */
+.input-cont {
+  margin-top: 10px;
+  font-size: 1.2rem;
+  letter-spacing: 2px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 20px;
+}
+
+.input-cont input {
+  width: 90px;
+}
+
+.add {
+  margin-left: 20px;
+  cursor: pointer;
+}
+
+.warning {
+  color: #C33C54;
+  font-size: 1rem;
+}
+/* Input Ends*/

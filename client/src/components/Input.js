@@ -8,7 +8,10 @@ class Input extends Component {
     yValue: "",
     alert: false,
     coord: [],
-    correctType: true
+    correctType: true,
+    popUpSort: false,
+    currentPage: 2,
+    todosPerPage: 2
   }
 
   handleChange = (e)=> {
@@ -62,14 +65,47 @@ class Input extends Component {
     this.setState({
       coord: coord
     })
-
-
   }
 
+  popUpSort = () => {
+    this.setState({popUpSort:!this.state.popUpSort})
+  }
+
+  handleSort = (e) => {
+    if(e.currentTarget.id==="xSort") {
+      let sort = this.state.coord
+      sort.sort((a, b) =>  (a.x > b.x ? 1 : -1))
+      }
+
+      if(e.currentTarget.id==="ySort") {
+        let sort = this.state.coord
+        sort.sort((a, b) =>  (a.y > b.y ? 1 : -1))
+        }
+    }
+
+
   render() {
+
+
+    //checking if output type is correct
     let correctType = this.state.correctType
     let alert = false
     let addButton = false
+
+    //logic of paginated list
+    const { coord, currentPage, todosPerPage } = this.state
+    const indexOfLastCoord = currentPage * todosPerPage
+    const indexOfFirstCoord = indexOfLastCoord- todosPerPage
+
+    const currentCoord = coord.slice(indexOfFirstCoord, indexOfLastCoord)
+
+
+
+
+
+
+
+
     if((this.state.xValue > 5000) ||
     (this.state.xValue < -5000) ||
     (this.state.yValue > 5000) ||
@@ -84,7 +120,7 @@ class Input extends Component {
       addButton = true
     }
 
-    const list = this.state.coord.map((list,id)=>{
+    const list = currentCoord.map((list,id)=>{
       return (
         <li
           key={list.id}
@@ -100,8 +136,6 @@ class Input extends Component {
         </li>
     )
     })
-    console.log(this.state.coord)
-
     return (
       <div className="input-cont">
           <div className="input-field">
@@ -136,6 +170,29 @@ class Input extends Component {
         {(!correctType)  && <p className="warning">Coordinates should be set as an integer</p>}
         </div>
         <div className="listOfCoord">
+          <div className="handleList">
+          <div
+            className="sort"
+            onClick={this.popUpSort}
+            >
+            <div
+              className={"sort-x " + (this.state.popUpSort === true ? 'sort-x-active' : "")} >
+              <div
+                id="xSort"
+                onClick={this.handleSort}  >
+                X</div>
+              <div
+                id="ySort"
+                onClick={this.handleSort}>
+                Y</div>
+            </div>
+            <div>
+            Sort By
+            </div>
+          </div>
+
+          <div>Pages </div>
+          </div>
           <ul className="ul-list">
             <ReactCSSTransitionGroup
               transitionName="list"
@@ -146,6 +203,7 @@ class Input extends Component {
           <button className="save">save</button>
           </ul>
         </div>
+
       </div>
     );
   }

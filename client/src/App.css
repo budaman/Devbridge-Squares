@@ -7,7 +7,6 @@
 }
 
 
-
 .App {
   margin: 0;
   padding: 0;
@@ -17,7 +16,6 @@ background-image: linear-gradient(-20deg, #d558c8 0%, #24d292 100%);
   height: 100vh;
   color: white;
 }
-
 
 
 /* Title */
@@ -31,9 +29,10 @@ background-image: linear-gradient(-20deg, #d558c8 0%, #24d292 100%);
   margin-top: 20px;
   font-size: 1.5rem;
   letter-spacing: 2px;
-  color: #393D3F;
+  color: white;
   font-weight: 600;
   height: 50px;
+  z-index: 2;
 }
 
 .title-background {
@@ -41,6 +40,7 @@ background-image: linear-gradient(-20deg, #d558c8 0%, #24d292 100%);
   top: 20px;
   height: 50px;
   width: 40vw;
+  min-width: 400px;
   background-color: #800E13;
   opacity: 0.2;
 }
@@ -159,6 +159,57 @@ ul {
   opacity: 0.01;
   transition: 700ms;
 }
+
+.handleList {
+  display: flex;
+  justify-content: space-around;
+}
+
+.sort {
+  background-color:  #3EC09A;
+  width: 70px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  margin-bottom: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sort-x {
+  position: absolute;
+  z-index: -1;
+  padding: 0;
+  margin: 0;
+  font-size: 0;
+
+}
+
+.sort-x-active {
+  left: 0;
+  width: 50px;
+  display: flex;
+  justify-content: space-around;
+  font-size: 0.8rem;
+  transition: ease-in-out 0.25s all;
+  z-index: 2;
+}
+
+
+
+.sort-x div {
+  margin: 0px 3px;
+  background-color: white;
+  color: #3EC09A;
+  padding: 0px 10px;
+  cursor: pointer;
+}
+
+
+.sort-x {
+
+}
+
 
 
 /* Liest Ends */

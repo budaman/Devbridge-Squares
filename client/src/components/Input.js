@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 
 class Input extends Component {
@@ -21,7 +22,6 @@ class Input extends Component {
     }
     value = (parseInt(e.target.value,10))
     isNotNaN = !isNaN(value)
-  console.log(!isNaN(value))
     if(isItInt===true && isNotNaN ===true) {
       this.setState({correctType: true})
       this.setState(()=>{
@@ -52,6 +52,20 @@ class Input extends Component {
     })
   }
 
+  handleRemove = (id) => {
+    let coord = this.state.coord
+    let i = coord.find(list => {
+      return list.id === id
+    })
+    i = coord.indexOf(i)
+    coord.splice(i, 1)
+    this.setState({
+      coord: coord
+    })
+
+
+  }
+
   render() {
     let correctType = this.state.correctType
     let alert = false
@@ -71,19 +85,22 @@ class Input extends Component {
     }
 
     const list = this.state.coord.map((list,id)=>{
-      console.log(list)
       return (
         <li
-          key={list.x}
+          key={list.id}
           className="listCont"
           >
           <span className="Col">{"x: " + list.x}</span>
           <span className="Col">{"y: " + list.y}</span>
-          <button className="remove">remove</button>
+          <button
+            onClick={()=> {
+                this.handleRemove(list.id)
+            }}
+            className="remove">remove</button>
         </li>
     )
     })
-    console.log(this.state.xValue)
+    console.log(this.state.coord)
 
     return (
       <div className="input-cont">
@@ -120,7 +137,12 @@ class Input extends Component {
         </div>
         <div className="listOfCoord">
           <ul className="ul-list">
+            <ReactCSSTransitionGroup
+              transitionName="list"
+              transitionEnterTimeout={700}
+              transitionLeaveTimeout={700}>
           {list}
+        </ReactCSSTransitionGroup>
           <button className="save">save</button>
           </ul>
         </div>

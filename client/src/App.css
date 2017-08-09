@@ -33,7 +33,21 @@ background-image: linear-gradient(-20deg, #d558c8 0%, #24d292 100%);
   letter-spacing: 2px;
   color: #393D3F;
   font-weight: 600;
- height: 50px;
+  height: 50px;
+}
+
+.title-background {
+  position: absolute;
+  top: 20px;
+  height: 50px;
+  width: 40vw;
+  background-color: #800E13;
+  opacity: 0.2;
+}
+
+.title-cont {
+  display: flex;
+  justify-content: center;
 }
 
 /* Title ends */
@@ -60,6 +74,12 @@ background-image: linear-gradient(-20deg, #d558c8 0%, #24d292 100%);
   margin-left: 20px;
   margin-top: 20px;
   cursor: pointer;
+  background-color: white;
+  color: #cd5dc5;
+  border: none;
+  padding: 3px;
+  width: 40px;
+  border-radius: 2px;
 }
 
 .warning {
@@ -91,6 +111,7 @@ ul {
 
 .ul-list {
   color: black;
+  font-size: 0.9rem;
 }
 
 .Col {
@@ -116,8 +137,28 @@ ul {
   background-color: #C33C54;
   color: white;
   border: none;
-  padding: 5px;
+  padding: 4px;
   border-radius: 2px;
 }
+
+
+.list-enter {
+  opacity: 0.01;
+}
+
+.list-enter.list-enter-active {
+  opacity: 1;
+  transition: 700ms;
+}
+
+.list-leave {
+  opacity: 1;
+}
+
+.list-leave.list-leave-active {
+  opacity: 0.01;
+  transition: 700ms;
+}
+
 
 /* Liest Ends */

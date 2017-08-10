@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 
 class Input extends Component {
@@ -10,8 +9,9 @@ class Input extends Component {
     coord: [],
     correctType: true,
     popUpSort: false,
-    currentPage: 2,
-    todosPerPage: 2
+    popUpDisplay: false,
+    currentPage: 1,
+    todosPerPage: 5
   }
 
   handleChange = (e)=> {
@@ -41,7 +41,6 @@ class Input extends Component {
                    return newState
                 })
         }
-
   }
 
   handleClick = () => {
@@ -67,12 +66,22 @@ class Input extends Component {
     })
   }
 
-  popUpSort = () => {
+  popUpSort = (e) => {
+
+    if(e.currentTarget.id === 'sort')
+    {
     this.setState({popUpSort:!this.state.popUpSort})
+
+    }
+    if(e.currentTarget.id === 'display') {
+      this.setState({popUpDisplay: !this.state.popUpDisplay})
+      console.log(e.currentTarget.id)
+    }
+
   }
 
   handleSort = (e) => {
-    if(e.currentTarget.id==="xSort") {
+    if(e.currentTarget.id==='xSort') {
       let sort = this.state.coord
       sort.sort((a, b) =>  (a.x > b.x ? 1 : -1))
       }
@@ -83,10 +92,21 @@ class Input extends Component {
         }
     }
 
+    handlePageId = (e) => {
+    let number = (parseInt(e.currentTarget.id,10))
+      this.setState({currentPage: number})
+    }
+
+    handleDisplay = (e) => {
+      let display = e.currentTarget.id
+      this.setState({
+        todosPerPage: display,
+        currentPage: 1,
+        popUpDisplay: false
+      })
+    }
 
   render() {
-
-
     //checking if output type is correct
     let correctType = this.state.correctType
     let alert = false
@@ -99,12 +119,23 @@ class Input extends Component {
 
     const currentCoord = coord.slice(indexOfFirstCoord, indexOfLastCoord)
 
+    const pageNumbers = [];
+    for (let i = 1; i <= Math.ceil(coord.length / todosPerPage); i++) {
+      pageNumbers.push(i);
+    }
 
-
-
-
-
-
+    const renderPageNumbers = pageNumbers.map(number => {
+      return (
+        <li
+          key={number}
+          className={(currentPage === number ? "current-page" : "")}
+          id={number}
+          onClick={this.handlePageId}
+        >
+          {number}
+        </li>
+      );
+    });
 
     if((this.state.xValue > 5000) ||
     (this.state.xValue < -5000) ||
@@ -118,6 +149,12 @@ class Input extends Component {
 
     if(alert===false && correctType ===true &&  this.state.xValue!=="" && this.state.yValue !=="") {
       addButton = true
+    }
+
+    let startList = false
+
+    if(this.state.coord.length > 0) {
+      startList = true
     }
 
     const list = currentCoord.map((list,id)=>{
@@ -136,7 +173,7 @@ class Input extends Component {
         </li>
     )
     })
-    return (
+      return (
       <div className="input-cont">
           <div className="input-field">
           <label
@@ -159,24 +196,24 @@ class Input extends Component {
             onChange={this.handleChange}
             value={this.state.yValue}
           />
-
         </div>
         { (addButton) && <button
           className="add"
           onClick={this.handleClick}
           >Add</button>}
-        <div >
+        <div>
         {(alert)  && <p className="warning">Numbers of interval shoud be between -5000 and 5000</p>}
         {(!correctType)  && <p className="warning">Coordinates should be set as an integer</p>}
         </div>
-        <div className="listOfCoord">
+        {(startList) &&<div className="listOfCoord">
           <div className="handleList">
           <div
             className="sort"
+            id="sort"
             onClick={this.popUpSort}
             >
             <div
-              className={"sort-x " + (this.state.popUpSort === true ? 'sort-x-active' : "")} >
+              className={"sort-x " + (this.state.popUpSort ? 'sort-x-active' : "")} >
               <div
                 id="xSort"
                 onClick={this.handleSort}  >
@@ -186,24 +223,46 @@ class Input extends Component {
                 onClick={this.handleSort}>
                 Y</div>
             </div>
-            <div>
+            <div
+              >
             Sort By
             </div>
           </div>
+          <div
+            className="sort"
+            id="display"
+            onClick={this.popUpSort}
+            >Display </div>
+            <div
 
-          <div>Pages </div>
+              className={"display " + (this.state.popUpDisplay  ? 'display-active' : "") }
+              >
+              <div
+                id="5"
+                onClick={this.handleDisplay}
+                >5</div>
+              <div
+                id="10"
+                onClick={this.handleDisplay}
+                >10</div>
+              <div
+                id="20"
+                onClick={this.handleDisplay}
+                >20</div>
+              <div
+                id="50"
+                onClick={this.handleDisplay}
+                >50</div>
+             </div>
           </div>
           <ul className="ul-list">
-            <ReactCSSTransitionGroup
-              transitionName="list"
-              transitionEnterTimeout={700}
-              transitionLeaveTimeout={700}>
           {list}
-        </ReactCSSTransitionGroup>
-          <button className="save">save</button>
+          </ul>
+          <ul id="page-numbers">
+            {renderPageNumbers}
           </ul>
         </div>
-
+      }
       </div>
     );
   }

@@ -235,3 +235,60 @@ ul {
   color: white;
 }
 /* Pagination Ends*/
+
+/*Sidebar*/
+
+.sidebarCont {
+  position: absolute;
+  left: -200px;
+  top: 0;
+  width: 200px;
+  height: 100vh;
+  transition: 0.500s ease-in-out all;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.sidebarCont div {
+  margin: 5px;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.arrow {
+  position: absolute;
+  height: 30px;
+  top: 45%;
+  left: 0;
+  cursor: pointer;
+  transition: 0.500s ease-in-out all;
+}
+
+.sidebarCont-active {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 200px;
+  height: 100vh;
+  border-right: 1px solid black;
+}
+
+.arrow-active {
+  position: absolute;
+  height: 30px;
+  top: 45%;
+  left: 200px;
+  cursor: pointer;
+}
+
+.fileInput {
+  position: absolute;
+  left: 40px;
+  width: 70px;
+  cursor: pointer;
+  opacity: 0;
+}
+
+/*Sidebar Ends*/

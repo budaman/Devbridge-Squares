@@ -66,6 +66,8 @@ class Input extends Component {
     })
   }
 
+
+
   popUpSort = (e) => {
 
     if(e.currentTarget.id === 'sort')
@@ -75,7 +77,6 @@ class Input extends Component {
     }
     if(e.currentTarget.id === 'display') {
       this.setState({popUpDisplay: !this.state.popUpDisplay})
-      console.log(e.currentTarget.id)
     }
 
   }
@@ -106,7 +107,17 @@ class Input extends Component {
       })
     }
 
+    componentWillReceiveProps(props)
+{
+      if(props.sendUpload.length>0) {
+        this.setState({
+          coord: props.sendUpload
+        })
+      }
+    }
+
   render() {
+
     //checking if output type is correct
     let correctType = this.state.correctType
     let alert = false
@@ -137,10 +148,8 @@ class Input extends Component {
       );
     });
 
-    if((this.state.xValue > 5000) ||
-    (this.state.xValue < -5000) ||
-    (this.state.yValue > 5000) ||
-    (this.state.yValue < -5000))
+    if((Math.abs(this.state.xValue) > 5000) ||
+    (Math.abs(this.state.yValue) > 5000) )
      {
        alert = true
      } else {
@@ -202,7 +211,7 @@ class Input extends Component {
           onClick={this.handleClick}
           >Add</button>}
         <div>
-        {(alert)  && <p className="warning">Numbers of interval shoud be between -5000 and 5000</p>}
+        {(alert)  && <p className="warning">Interval of numbers shoud be in between -5000 and 5000</p>}
         {(!correctType)  && <p className="warning">Coordinates should be set as an integer</p>}
         </div>
         {(startList) &&<div className="listOfCoord">

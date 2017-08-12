@@ -11,7 +11,8 @@ class Input extends Component {
     popUpSort: false,
     popUpDisplay: false,
     currentPage: 1,
-    todosPerPage: 5
+    todosPerPage: 5,
+    duplicate: false
   }
 
   handleChange = (e)=> {
@@ -19,6 +20,8 @@ class Input extends Component {
     let value
     let isItInt = true
     let isNotNaN = true
+
+    this.setState({duplicate: false})
 
     if (e.target.value.indexOf('.') >= 0)  {
       isItInt = false
@@ -46,6 +49,16 @@ class Input extends Component {
   handleClick = () => {
     let coord = this.state.coord;
     let id = this.state.xValue + "" + this.state.yValue
+    let duplicate = false;
+    duplicate = coord.find((co)=>{
+      return co.id === id
+    })
+    if(duplicate !== undefined) {
+      this.setState({
+        duplicate: true
+      })
+      return
+    }
     coord.push({x: this.state.xValue, y: this.state.yValue, id: id})
     this.setState({
       coord: coord,
@@ -122,6 +135,7 @@ class Input extends Component {
     let correctType = this.state.correctType
     let alert = false
     let addButton = false
+    let duplicate = this.state.duplicate
 
     //logic of paginated list
     const { coord, currentPage, todosPerPage } = this.state
@@ -213,6 +227,7 @@ class Input extends Component {
         <div>
         {(alert)  && <p className="warning">Interval of numbers shoud be in between -5000 and 5000</p>}
         {(!correctType)  && <p className="warning">Coordinates should be set as an integer</p>}
+          {(duplicate)  && <p className="warning">Duplicate points are not allowed</p>}
         </div>
         {(startList) &&<div className="listOfCoord">
           <div className="handleList">

@@ -30,12 +30,21 @@ class Sidebar extends Component {
             let y = parseInt(num[2], 10)
             let xInt = isNaN(x)
             let yInt = isNaN(y)
+
             if(Math.abs(x>5000) || (Math.abs(y>5000))) {
               alert('Interval of numbers shoud be in between -5000 and 5000. Error line: ' + num)
               return 0
             }
             if(num[1]===" " && !xInt && !yInt ){
             let id = num[0] + num[2]
+            let duplicate = false;
+            duplicate = coord.find((co)=>{
+              return co.id === id
+            })
+            if(duplicate !== undefined) {
+              alert('duplicate points are not allowed')
+              return 0
+            }
               coord.push({x: x, y: y, id: id})
           } else alert('Incorrect input. Error line: ' + num)
           return 1

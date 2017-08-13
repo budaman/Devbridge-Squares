@@ -14,9 +14,9 @@ class Sidebar extends Component {
 
   openFile = (e) => {
     let input = e.target
+
     let coord = []
     let reader = new FileReader()
-
       reader.onload = function(e){
         let text = reader.result
         let textInput = text.split(/\r\n|\n/)
@@ -59,15 +59,29 @@ class Sidebar extends Component {
       this.props.getUplCoord(
         coord: coord
       )
+      input.value = ''
    }
-
-
-
     reader.onerror = (evt) => {
         alert(evt.target.error.name);
     };
-
       reader.readAsText(input.files[0])
+  }
+
+  clearPoints = () => {
+    let coord = []
+    this.props.getUplCoord(
+      coord: coord
+    )
+  }
+
+  downloadTxtFile = () => {
+    var element = document.createElement("a");
+
+    var file = new Blob([this.props.click], {type: 'text/plain'});
+    element.href = URL.createObjectURL(file);
+    element.download = "listOfpoints.txt";
+    element.click();
+
   }
 
   render() {
@@ -75,7 +89,6 @@ class Sidebar extends Component {
 
 
     const { isActive} = this.state
-
     return (
       <div>
       <div className={"sidebarCont " + (isActive ? "sidebarCont-active" : "")}>
@@ -86,9 +99,14 @@ class Sidebar extends Component {
            onChange={this.openFile}
          />
         </div>
-        <div>Donwload</div>
+        <div
+          onClick={this.downloadTxtFile}
+          ><input id="myInput" />Donwload</div>
         <div>Save</div>
         <div>Find Squares</div>
+        <div
+          onClick={this.clearPoints}
+          >Clear Points</div>
       </div>
       <img
         className={"arrow " + (isActive ? "arrow-active" : "")}

@@ -6,7 +6,8 @@ import './App.css'
 
 class App extends Component {
   state = {
-    uplCoord: []
+    uplCoord: [],
+    coord: []
   }
 
   getUplCoord = (coord) => {
@@ -16,16 +17,12 @@ class App extends Component {
   }
 
 
-
-click = ()=>{
-}
-
   render() {
     return (
       <div onClick={this.click} className="App">
         <Title />
-        <Input sendUpload={this.state.uplCoord}/>
-        <Sidebar getUplCoord={this.getUplCoord} />
+        <Input sendUpload={this.state.uplCoord} />
+        <Sidebar getUplCoord={this.getUplCoord}   />
       </div>
     );
   }

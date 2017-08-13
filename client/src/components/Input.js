@@ -65,6 +65,7 @@ class Input extends Component {
       xValue: "",
       yValue: ""
     })
+
   }
 
   handleRemove = (id) => {
@@ -79,6 +80,9 @@ class Input extends Component {
     })
   }
 
+  componentDidUpdate () {
+
+  }
 
 
   popUpSort = (e) => {
@@ -126,6 +130,11 @@ class Input extends Component {
         this.setState({
           coord: props.sendUpload
         })
+
+      // } else  {
+      //   this.setState({
+      //     coord: []
+      //   })
       }
     }
 
@@ -151,8 +160,8 @@ class Input extends Component {
     }
 
     const renderPageNumbers = pageNumbers.map((number, i) => {
-      
-      if(currentPage-7<i && currentPage+5> i) {
+
+      if(currentPage-6<i && currentPage+4> i) {
         return (
           <li
             key={number}
@@ -175,7 +184,7 @@ class Input extends Component {
       alert = false
     }
 
-    if(coord.length > 10000) {
+    if(coord.length > 9999) {
       maxLimit = true;
     }
 

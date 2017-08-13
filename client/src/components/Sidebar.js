@@ -35,7 +35,7 @@ class Sidebar extends Component {
               alert('Interval of numbers shoud be in between -5000 and 5000. Error line: ' + num)
               return 0
             }
-            if(num[1]===" " && !xInt && !yInt ){
+            if( !xInt && !yInt ){ //num[1]===" " &&
             let id = num[0] + num[2]
             let duplicate = false;
             duplicate = coord.find((co)=>{
@@ -43,6 +43,10 @@ class Sidebar extends Component {
             })
             if(duplicate !== undefined) {
               alert('duplicate points are not allowed')
+              return 0
+            }
+            if(coord.length > 9999) {
+              // alert('Limit of points is 10 000')
               return 0
             }
               coord.push({x: x, y: y, id: id})

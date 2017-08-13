@@ -136,6 +136,7 @@ class Input extends Component {
     let alert = false
     let addButton = false
     let duplicate = this.state.duplicate
+    let maxLimit = false;
 
     //logic of paginated list
     const { coord, currentPage, todosPerPage } = this.state
@@ -149,17 +150,21 @@ class Input extends Component {
       pageNumbers.push(i);
     }
 
-    const renderPageNumbers = pageNumbers.map(number => {
-      return (
-        <li
-          key={number}
-          className={(currentPage === number ? "current-page" : "")}
-          id={number}
-          onClick={this.handlePageId}
-        >
-          {number}
-        </li>
-      );
+    const renderPageNumbers = pageNumbers.map((number, i) => {
+      
+      if(currentPage-7<i && currentPage+5> i) {
+        return (
+          <li
+            key={number}
+            className={(currentPage === number ? "current-page" : "")}
+            id={number}
+            onClick={this.handlePageId}
+          >
+            {number}
+          </li>
+        )
+      }
+
     });
 
     if((Math.abs(this.state.xValue) > 5000) ||
@@ -170,7 +175,11 @@ class Input extends Component {
       alert = false
     }
 
-    if(alert===false && correctType ===true &&  this.state.xValue!=="" && this.state.yValue !=="") {
+    if(coord.length > 10000) {
+      maxLimit = true;
+    }
+
+    if(alert===false && correctType ===true &&  this.state.xValue!=="" && this.state.yValue !=="" && maxLimit ===false) {
       addButton = true
     }
 
@@ -179,6 +188,8 @@ class Input extends Component {
     if(this.state.coord.length > 0) {
       startList = true
     }
+
+
 
     const list = currentCoord.map((list,id)=>{
       return (
@@ -228,6 +239,7 @@ class Input extends Component {
         {(alert)  && <p className="warning">Interval of numbers shoud be in between -5000 and 5000</p>}
         {(!correctType)  && <p className="warning">Coordinates should be set as an integer</p>}
           {(duplicate)  && <p className="warning">Duplicate points are not allowed</p>}
+          {(maxLimit)  && <p className="warning">Limit of points is 10 000</p>}
         </div>
         {(startList) &&<div className="listOfCoord">
           <div className="handleList">

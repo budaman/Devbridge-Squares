@@ -322,7 +322,12 @@ ul {
   justify-content: center;
   align-items: center;
   flex-direction: column;
+}
 
+.squaresCont {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
 }
 
 .closeTab {
@@ -356,17 +361,21 @@ ul {
 .square-list {
   color: black;
   width: 700px;
-  max-height: 500px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  margin-bottom: 200px;
+  height: 400px;
+  box-sizing: border-box;
+  overflow-y: auto;
+  padding: 0;
+  margin: 0;
 }
 
 .square-list li {
-  width: 700px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 600px;
   font-size: 1rem;
+  padding: 8px 0;
+  margin: 2px 0;
 }
 
 /* Squares Ends */

@@ -85,7 +85,7 @@ class Sidebar extends Component {
 
 
   render() {
-
+  
 
 
     const { isActive} = this.state
@@ -97,6 +97,8 @@ class Sidebar extends Component {
            type='file'
            className='fileInput'
            onChange={this.openFile}
+           onClick={this.handleClose}
+
          />
         </div>
         <div

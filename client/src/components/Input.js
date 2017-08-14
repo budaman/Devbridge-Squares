@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Sidebar from './Sidebar'
+import Squares from './Squares'
 
 
 class Input extends Component {
@@ -14,7 +15,9 @@ class Input extends Component {
     currentPage: 1,
     todosPerPage: 5,
     duplicate: false,
-    uplCoord: []
+    uplCoord: [],
+    squares: [],
+    squaresOn: false
   }
 
   getUplCoord = (coord) => {
@@ -22,6 +25,8 @@ class Input extends Component {
        coord: coord
      })
   }
+
+
 
   downloadTxtFile = () => {
     let element = document.createElement("a");
@@ -40,17 +45,18 @@ class Input extends Component {
   countSquares = () =>{
     let coord = this.state.coord
     let squares = []
+    this.setState({
+      squares: squares,
+      squaresOn: true
+    })
 
     for (let i =0; i<coord.length; i++) {
       var duplicate = false
-
-
       coord.forEach(co=>{
         if(coord[i].y === co.y && coord[i].id !== co.id) {
           let p1 = coord[i]
           let p2 = co
           let p3 = []
-          let p4 = []
           for(let i =0; i<coord.length; i++) {
             coord.forEach(co=>{
               let dis = p1.x - p2.x
@@ -90,7 +96,6 @@ class Input extends Component {
                         return
                       }
                       squares.push(obj)
-                      console.log(squares)
                     }
                   })
                   return
@@ -214,6 +219,11 @@ class Input extends Component {
       })
     }
 
+    handleClose = (onClose)=> {
+      this.setState({
+        squaresOn: onClose
+      })
+    }
 
   render() {
 
@@ -237,7 +247,6 @@ class Input extends Component {
     }
 
     const renderPageNumbers = pageNumbers.map((number, i) => {
-
       if(currentPage-6<i && currentPage+4> i) {
         return (
           <li
@@ -250,7 +259,6 @@ class Input extends Component {
           </li>
         )
       }
-
     });
 
     if((Math.abs(this.state.xValue) > 5000) ||
@@ -295,6 +303,7 @@ class Input extends Component {
         </li>
     )
     })
+
       return (
       <div className="input-cont">
           <div className="input-field">
@@ -358,7 +367,6 @@ class Input extends Component {
             onClick={this.popUpSort}
             >Display </div>
             <div
-
               className={"display " + (this.state.popUpDisplay  ? 'display-active' : "") }
               >
               <div
@@ -385,12 +393,20 @@ class Input extends Component {
           <ul id="page-numbers">
             {renderPageNumbers}
           </ul>
+
         </div>
       }
       <Sidebar getUplCoord={this.getUplCoord}
               downloadTxtFile={this.downloadTxtFile}
               countSquares={this.countSquares}
+
              />
+      <Squares
+        squaresOn={this.state.squaresOn}
+        squares={this.state.squares}
+        handleClose={this.handleClose}
+       />
+
       </div>
     );
   }

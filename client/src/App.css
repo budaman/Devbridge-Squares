@@ -308,3 +308,65 @@ ul {
 }
 
 /*Sidebar Ends*/
+
+/*  Squares */
+.squares {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  background-color: black;
+  z-index: 10;
+  top:0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+}
+
+.closeTab {
+  z-index: 55;
+  position: absolute;
+  right:20px;
+  top: 20px;
+  font-size: 3rem;
+  cursor: pointer;
+}
+
+.notFound {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+}
+
+.displaySq {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 5px;
+}
+
+.displaySq div {
+  width: 30px;
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.square-list {
+  color: black;
+  width: 700px;
+  max-height: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-bottom: 200px;
+}
+
+.square-list li {
+  width: 700px;
+  font-size: 1rem;
+}
+
+/* Squares Ends */

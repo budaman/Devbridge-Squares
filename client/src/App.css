@@ -360,7 +360,7 @@ ul {
 
 .square-list {
   color: black;
-  width: 700px;
+  width: 720px;
   height: 400px;
   box-sizing: border-box;
   overflow-y: auto;
@@ -372,10 +372,31 @@ ul {
   display: flex;
   justify-content: center;
   flex-direction: column;
-  width: 600px;
+  width: 700px;
   font-size: 1rem;
   padding: 8px 0;
   margin: 2px 0;
+}
+
+#sq-page-numbers {
+  font-size: 1rem;
+  color: black;
+  cursor: pointer;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
+  margin-top: 5px;
+  width: 700px;
+  justify-content: center;
+}
+
+#sq-page-numbers li {
+  font-size: 0.9rem;
+  width: 40px;
+  margin: 0 2px;
+  display: flex;
+  justify-content: center;
 }
 
 /* Squares Ends */

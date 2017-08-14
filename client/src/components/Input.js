@@ -259,7 +259,7 @@ class Input extends Component {
           </li>
         )
       }
-    });
+    })
 
     if((Math.abs(this.state.xValue) > 5000) ||
     (Math.abs(this.state.yValue) > 5000) )

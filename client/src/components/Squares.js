@@ -17,6 +17,11 @@ class Squares extends Component {
     })
   }
 
+  handlePageId = (e) => {
+  let number = (parseInt(e.currentTarget.id,10))
+    this.setState({currentPage: number})
+  }
+
   closeTab = ()=> {
     this.props.handleClose(false)
   }
@@ -34,16 +39,34 @@ class Squares extends Component {
     const indexOfLastCoord = currentPage * todosPerPage
     const indexOfFirstCoord = indexOfLastCoord- todosPerPage
     const currentSquare = allSquares.slice(indexOfFirstCoord, indexOfLastCoord)
+    const pageNumbers = [];
+    for (let i = 1; i <= Math.ceil(allSquares.length / todosPerPage); i++) {
+      pageNumbers.push(i);
+    }
 
+    const renderPageNumbers = pageNumbers.map((number, i) => {
+      if(currentPage-6<i && currentPage+4> i) {
+        return (
+          <li
+            key={number}
+            className={(currentPage === number ? "current-page" : "")}
+            id={number}
+            onClick={this.handlePageId}
+          >
+            {number}
+          </li>
+        )
+      }
+    })
 
     console.log(allSquares)
     let squares = currentSquare.map((sq, i)=>{
       return (
         <li key={sq.id}>
-          {"Coordinates: P1 x: [" + sq.p1.x + " y: " + sq.p1.y
-          + "], P2 x: " + sq.p2.x + " y: " + sq.p2.y
-          + ", P3 x: " + sq.p3.x + " y: " + sq.p3.y
-          + ", P4 x: " + sq.p4.x + " y: " + sq.p4.y
+          {"Coordinates: P1 [x: " + sq.p1.x + " y: " + sq.p1.y
+          + "], P2 [x: " + sq.p2.x + " y: " + sq.p2.y
+          + "], P3 [x: " + sq.p3.x + " y: " + sq.p3.y
+          + "], P4 [x: " + sq.p4.x + " y: " + sq.p4.y + "]"
         }
         </li>
       )
@@ -83,6 +106,9 @@ class Squares extends Component {
           </div> }
           <ul className="square-list">
           {squares}
+        </ul>
+        <ul id="sq-page-numbers">
+          {renderPageNumbers}
         </ul>
         </div>
       </div>}

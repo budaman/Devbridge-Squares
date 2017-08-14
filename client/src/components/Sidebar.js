@@ -12,6 +12,7 @@ class Sidebar extends Component {
 
 
 
+
   openFile = (e) => {
     let input = e.target
 
@@ -75,14 +76,13 @@ class Sidebar extends Component {
   }
 
   downloadTxtFile = () => {
-    var element = document.createElement("a");
-
-    var file = new Blob([this.props.click], {type: 'text/plain'});
-    element.href = URL.createObjectURL(file);
-    element.download = "listOfpoints.txt";
-    element.click();
-
+    this.props.downloadTxtFile()
   }
+
+  countSquares = () => {
+    this.props.countSquares()
+  }
+
 
   render() {
 
@@ -101,9 +101,11 @@ class Sidebar extends Component {
         </div>
         <div
           onClick={this.downloadTxtFile}
-          ><input id="myInput" />Donwload</div>
+          >Donwload</div>
         <div>Save</div>
-        <div>Find Squares</div>
+        <div
+          onClick={this.countSquares}
+          >Show Squares</div>
         <div
           onClick={this.clearPoints}
           >Clear Points</div>

@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import Sidebar from './Sidebar'
 
 
 class Input extends Component {
@@ -12,7 +13,98 @@ class Input extends Component {
     popUpDisplay: false,
     currentPage: 1,
     todosPerPage: 5,
-    duplicate: false
+    duplicate: false,
+    uplCoord: []
+  }
+
+  getUplCoord = (coord) => {
+     this.setState({
+       coord: coord
+     })
+  }
+
+  downloadTxtFile = () => {
+    let element = document.createElement("a");
+    let output = ''
+    this.state.coord.forEach((item) => {
+      output += item.x + ' ' + item.y + '\r\n'
+    });
+
+    let file = new Blob([
+      output], {type: 'text/plain'});
+    element.href = URL.createObjectURL(file);
+    element.download = "listOfpoints.txt";
+    element.click();
+  }
+
+  countSquares = () =>{
+    let coord = this.state.coord
+    let squares = []
+
+    for (let i =0; i<coord.length; i++) {
+      var duplicate = false
+
+
+      coord.forEach(co=>{
+        if(coord[i].y === co.y && coord[i].id !== co.id) {
+          let p1 = coord[i]
+          let p2 = co
+          let p3 = []
+          let p4 = []
+          for(let i =0; i<coord.length; i++) {
+            coord.forEach(co=>{
+              let dis = p1.x - p2.x
+              if(p2.x === co.x && (p2.y + dis === co.y || p2.y - dis === co.y) && p2.id !== co.id) {
+                p3 = co
+                for(let i =0; i<coord.length; i++) {
+                  coord.forEach(co=>{
+                    if(p3.y === co.y && p1.x === co.x && p3.id !== p1.id) {
+                      let makeInt = (p)=>{
+                        p = parseInt(p,10)
+                        if (p===0) {
+                          return 1
+                        } else {
+                          return p
+                        }
+                      }
+                      p1.id = makeInt(p1.id)
+                      p2.id = makeInt(p2.id)
+                      p3.id = makeInt(p3.id)
+                      co.id = makeInt(co.id)
+                    let  id = p1.id * p2.id * p3.id * co.id
+                      let obj = {}
+                      obj = {
+                        p1: p1,
+                        p2: p2,
+                        p3: p3,
+                        p4: co,
+                        id: id
+                      }
+                      squares.forEach(sq=>{
+                       if(sq.id  === obj.id ) {
+                         duplicate = true
+                         return
+                       }
+                      })
+                      if(duplicate) {
+                        return
+                      }
+                      squares.push(obj)
+                      console.log(squares)
+                    }
+                  })
+                  return
+                }
+                return
+              }
+            })
+            return
+          }
+          return
+        }
+        return
+      })
+    }
   }
 
   handleChange = (e)=> {
@@ -23,6 +115,8 @@ class Input extends Component {
 
     this.setState({duplicate: false})
 
+
+
     if (e.target.value.indexOf('.') >= 0)  {
       isItInt = false
     }
@@ -31,7 +125,7 @@ class Input extends Component {
     if(isItInt===true && isNotNaN ===true) {
       this.setState({correctType: true})
       this.setState(()=>{
-               var newState = {};
+               let newState = {};
                newState[id + 'Value'] = value
                return newState
             })
@@ -39,7 +133,7 @@ class Input extends Component {
         else {
           this.setState({correctType: false})
           this.setState(()=>{
-                   var newState = {};
+                   let newState = {};
                    newState[id + 'Value'] = ""
                    return newState
                 })
@@ -78,10 +172,6 @@ class Input extends Component {
     this.setState({
       coord: coord
     })
-  }
-
-  componentDidUpdate () {
-
   }
 
 
@@ -124,19 +214,6 @@ class Input extends Component {
       })
     }
 
-    componentWillReceiveProps(props)
-{
-      if(props.sendUpload.length>0) {
-        this.setState({
-          coord: props.sendUpload
-        })
-
-      // } else  {
-      //   this.setState({
-      //     coord: []
-      //   })
-      }
-    }
 
   render() {
 
@@ -197,6 +274,8 @@ class Input extends Component {
     if(this.state.coord.length > 0) {
       startList = true
     }
+
+
 
 
 
@@ -308,6 +387,10 @@ class Input extends Component {
           </ul>
         </div>
       }
+      <Sidebar getUplCoord={this.getUplCoord}
+              downloadTxtFile={this.downloadTxtFile}
+              countSquares={this.countSquares}
+             />
       </div>
     );
   }

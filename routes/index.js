@@ -16,14 +16,31 @@ router.get('/', function(req, res, next) {
 });
 
 
-router.post('/coord', (req, res) => {
-   db.collection('coord').save(req.body, (err, result) => {
-     if (err) return console.log(err)
+// router.post('/coord', (req, res) => {
+//    db.collection('coord').save(req.body, (err, result) => {
+//      if (err) return console.log(err)
+//
+//      console.log('saved to database')
+//      res.redirect('/')
+//    })
+// })
 
-     console.log('saved to database')
-     res.redirect('/')
-   })
+router.put('/coord', (req, res) => {
+  db.collection('coord')
+  .findOneAndUpdate({name: req.body.name}, {
+    $set: {
+      name: req.body.name,
+      coord: req.body.coord
+    }
+  }, {
+    sort: {_id: -1},
+    upsert: true
+  }, (err, result) => {
+    if (err) return res.send(err)
+    res.send(result)
+  })
 })
+
 
 router.post('/lists', (req, res) => {
   repo.addList(req.body, (err, data) => {

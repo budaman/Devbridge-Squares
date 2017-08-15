@@ -13,11 +13,12 @@ MongoClient.connect('mongodb://starwars:slaptazodis@ds161032.mlab.com:61032/star
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-
   var cursor = db.collection('coord').find().toArray(function(err, results) {
   res.json(results);
   })
 });
+
+
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {

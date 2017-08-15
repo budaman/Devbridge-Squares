@@ -87,6 +87,10 @@ class Sidebar extends Component {
     this.props.saveList()
   }
 
+  loadList = () => {
+    this.props.loadList()
+  }
+
 
   render() {
 
@@ -117,7 +121,10 @@ class Sidebar extends Component {
           <div
             onClick={this.saveList}
             >Save List</div>
-          <div>Load List</div>
+          <div
+            onClick={this.loadList}
+            >Load List
+          </div>
           <div>Delete List</div>
       </div>
       <img

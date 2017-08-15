@@ -29,6 +29,7 @@ class SaveList extends Component {
             })
         })
         alert('List saved as' + this.state.name)
+        this.props.saveList()
      } else alert('not everething is filled')
     }
 

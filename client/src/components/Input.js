@@ -21,14 +21,15 @@ class Input extends Component {
     uplCoord: [],
     squares: [],
     squaresOn: false,
-    saveList: false
+    saveList: false,
+    loadList: false
   }
 
   componentDidMount() {
-fetch('/users')
-   .then(res => res.json())
-   .then(coord => this.setState({ loadCoord: coord }));
-}
+    fetch('/users')
+       .then(res => res.json())
+       .then(coord => this.setState({ loadCoord: coord }));
+  }
 
   getUplCoord = (coord) => {
      this.setState({
@@ -242,10 +243,33 @@ fetch('/users')
     })
   }
 
+  loadList = () => {
+    this.setState({
+      loadList: !this.state.loadList
+    })
+    fetch('/users')
+       .then(res => res.json())
+       .then(coord => this.setState({ loadCoord: coord }));
+  }
+
+  loadId = (id) => {
+    let loadCoord = this.state.loadCoord
+
+   let pickedCoord = loadCoord.find(co=>{
+      return co.name ===id
+    })
+
+   let coord = pickedCoord.coord
+    this.setState({
+      coord: coord,
+      loadList: !this.state.loadList
+    })
+  }
+
 
   render() {
 
-    const { coord, currentPage, todosPerPage, correctType, duplicate, saveList } = this.state
+    const { coord, currentPage, todosPerPage, correctType, duplicate, saveList, loadList } = this.state
 
     //checking if output type is correct
 
@@ -291,7 +315,7 @@ fetch('/users')
       if(currentPage-6<i && currentPage+4> i) {
         return (
           <li
-            key={number}
+            key={i}
             className={(currentPage === number ? "current-page" : "")}
             id={number}
             onClick={this.handlePageId}
@@ -413,6 +437,7 @@ fetch('/users')
               downloadTxtFile={this.downloadTxtFile}
               countSquares={this.countSquares}
               saveList={this.saveList}
+              loadList={this.loadList}
              />
       <Squares
         squaresOn={this.state.squaresOn}
@@ -423,7 +448,11 @@ fetch('/users')
         saveList={this.saveList}
         coord={this.state.coord}
       />}
-      <LoadCoord />
+      { loadList && <LoadCoord
+        loadList={this.loadList}
+        loadCoord={this.state.loadCoord}
+        loadId={this.loadId}
+      /> }
       </div>
     );
   }

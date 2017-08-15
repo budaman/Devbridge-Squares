@@ -48,7 +48,7 @@ class Squares extends Component {
       if(currentPage-6<i && currentPage+4> i) {
         return (
           <li
-            key={number}
+            key={i}
             className={(currentPage === number ? "current-page" : "")}
             id={number}
             onClick={this.handlePageId}
@@ -57,9 +57,8 @@ class Squares extends Component {
           </li>
         )
       }
+      return 1
     })
-
-    console.log(allSquares)
     let squares = currentSquare.map((sq, i)=>{
       return (
         <li key={sq.id}>

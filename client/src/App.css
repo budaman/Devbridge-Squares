@@ -310,7 +310,7 @@ ul {
 /*Sidebar Ends*/
 
 /*  Squares */
-.squares {
+.squares, .save {
   position: fixed;
   width: 100vw;
   height: 100vh;

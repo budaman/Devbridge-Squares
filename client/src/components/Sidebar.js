@@ -83,9 +83,13 @@ class Sidebar extends Component {
     this.props.countSquares()
   }
 
+  saveList = () => {
+    this.props.saveList()
+  }
+
 
   render() {
-  
+
 
 
     const { isActive} = this.state
@@ -104,13 +108,17 @@ class Sidebar extends Component {
         <div
           onClick={this.downloadTxtFile}
           >Donwload</div>
-        <div>Save</div>
         <div
           onClick={this.countSquares}
           >Show Squares</div>
         <div
           onClick={this.clearPoints}
           >Clear Points</div>
+          <div
+            onClick={this.saveList}
+            >Save List</div>
+          <div>Load List</div>
+          <div>Delete List</div>
       </div>
       <img
         className={"arrow " + (isActive ? "arrow-active" : "")}

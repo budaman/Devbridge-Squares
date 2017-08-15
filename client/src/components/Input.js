@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import Sidebar from './Sidebar'
 import Squares from './Squares'
+import SaveList from './SaveList'
+import LoadCoord from './LoadCoord'
 
 
 class Input extends Component {
@@ -9,6 +11,7 @@ class Input extends Component {
     yValue: "",
     alert: false,
     coord: [],
+    loadCoord: [],
     correctType: true,
     popUpSort: false,
     popUpDisplay: false,
@@ -17,16 +20,21 @@ class Input extends Component {
     duplicate: false,
     uplCoord: [],
     squares: [],
-    squaresOn: false
+    squaresOn: false,
+    saveList: false
   }
+
+  componentDidMount() {
+fetch('/users')
+   .then(res => res.json())
+   .then(coord => this.setState({ loadCoord: coord }));
+}
 
   getUplCoord = (coord) => {
      this.setState({
        coord: coord
      })
   }
-
-
 
   downloadTxtFile = () => {
     let element = document.createElement("a");
@@ -179,7 +187,6 @@ class Input extends Component {
     })
   }
 
-
   popUpSort = (e) => {
 
     if(e.currentTarget.id === 'sort')
@@ -225,41 +232,27 @@ class Input extends Component {
       })
     }
 
-  render() {
-
-    //checking if output type is correct
-    let correctType = this.state.correctType
-    let alert = false
-    let addButton = false
-    let duplicate = this.state.duplicate
-    let maxLimit = false;
-
-    //logic of paginated list
-    const { coord, currentPage, todosPerPage } = this.state
-    const indexOfLastCoord = currentPage * todosPerPage
-    const indexOfFirstCoord = indexOfLastCoord- todosPerPage
-
-    const currentCoord = coord.slice(indexOfFirstCoord, indexOfLastCoord)
-
-    const pageNumbers = [];
-    for (let i = 1; i <= Math.ceil(coord.length / todosPerPage); i++) {
-      pageNumbers.push(i);
+    saveList = ()=>{
+      console.log('labas')
     }
 
-    const renderPageNumbers = pageNumbers.map((number, i) => {
-      if(currentPage-6<i && currentPage+4> i) {
-        return (
-          <li
-            key={number}
-            className={(currentPage === number ? "current-page" : "")}
-            id={number}
-            onClick={this.handlePageId}
-          >
-            {number}
-          </li>
-        )
-      }
+  saveList = () => {
+    this.setState({
+      saveList: !this.state.saveList
     })
+  }
+
+
+  render() {
+
+    const { coord, currentPage, todosPerPage, correctType, duplicate, saveList } = this.state
+
+    //checking if output type is correct
+
+
+    let alert = false
+    let addButton = false
+    let maxLimit = false;
 
     if((Math.abs(this.state.xValue) > 5000) ||
     (Math.abs(this.state.yValue) > 5000) )
@@ -283,9 +276,31 @@ class Input extends Component {
       startList = true
     }
 
+    //logic of paginated list
 
+    const indexOfLastCoord = currentPage * todosPerPage
+    const indexOfFirstCoord = indexOfLastCoord- todosPerPage
+    const currentCoord = coord.slice(indexOfFirstCoord, indexOfLastCoord)
 
+    const pageNumbers = [];
+    for (let i = 1; i <= Math.ceil(coord.length / todosPerPage); i++) {
+      pageNumbers.push(i);
+    }
 
+    const renderPageNumbers = pageNumbers.map((number, i) => {
+      if(currentPage-6<i && currentPage+4> i) {
+        return (
+          <li
+            key={number}
+            className={(currentPage === number ? "current-page" : "")}
+            id={number}
+            onClick={this.handlePageId}
+          >
+            {number}
+          </li>
+        )
+      }
+    })
 
     const list = currentCoord.map((list,id)=>{
       return (
@@ -303,7 +318,6 @@ class Input extends Component {
         </li>
     )
     })
-
       return (
       <div className="input-cont">
           <div className="input-field">
@@ -393,20 +407,23 @@ class Input extends Component {
           <ul id="page-numbers">
             {renderPageNumbers}
           </ul>
-
         </div>
       }
       <Sidebar getUplCoord={this.getUplCoord}
               downloadTxtFile={this.downloadTxtFile}
               countSquares={this.countSquares}
-
+              saveList={this.saveList}
              />
       <Squares
         squaresOn={this.state.squaresOn}
         squares={this.state.squares}
         handleClose={this.handleClose}
        />
-
+      { saveList && <SaveList
+        saveList={this.saveList}
+        coord={this.state.coord}
+      />}
+      <LoadCoord />
       </div>
     );
   }

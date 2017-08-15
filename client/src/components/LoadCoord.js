@@ -29,16 +29,17 @@ loadList = ()=> {
       <div
         className="load"
         >
+          <div
+             className="closeTab"
+             onClick={this.loadList}
+             >X</div>
           { !loadItems && <div>Nothing to load</div>}
           { loadItems && <div className="loadCont">
           <h4>Pick a list to load</h4>
           <ul className="loadList">
             {loadList}
           </ul>
-        <div
-           className="closeTab"
-           onClick={this.loadList}
-           >X</div>
+
          </div>}
       </div>
     );

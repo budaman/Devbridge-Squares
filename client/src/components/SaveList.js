@@ -37,18 +37,23 @@ class SaveList extends Component {
     }
 
     render() {
-
+      let saveItem = false
+      saveItem = this.props.coord.length > 0 ? true : false
     return (
     <div
       className="save"
       >
+      {!saveItem && <div>Nothing to save</div>}
+      { saveItem && <div className="saveCont">
       <input
         type="text"
         onChange={this.handleName}
+        placeholder="Type name of list"
       />
       <button
         onClick={this.handlePost}
         >Save</button>
+      </div> }
       <div
          className="closeTab"
          onClick={this.saveList}

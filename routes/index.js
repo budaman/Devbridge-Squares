@@ -41,6 +41,13 @@ router.put('/coord', (req, res) => {
   })
 })
 
+router.delete('/coord', (req, res) => {
+  db.collection('coord').findOneAndDelete({name: req.body.name},
+  (err, result) => {
+    if (err) return res.send(500, err)
+    res.send({message: 'coord was deleted'})
+  })
+})
 
 router.post('/lists', (req, res) => {
   repo.addList(req.body, (err, data) => {

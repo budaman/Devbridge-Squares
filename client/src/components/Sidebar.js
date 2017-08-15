@@ -10,9 +10,6 @@ class Sidebar extends Component {
     this.setState({isActive: !this.state.isActive})
   }
 
-
-
-
   openFile = (e) => {
     let input = e.target
 
@@ -91,6 +88,10 @@ class Sidebar extends Component {
     this.props.loadList()
   }
 
+  deleteList = () => {
+    this.props.deleteList()
+  }
+
 
   render() {
 
@@ -125,7 +126,9 @@ class Sidebar extends Component {
             onClick={this.loadList}
             >Load List
           </div>
-          <div>Delete List</div>
+          <div
+            onClick={this.deleteList}
+            >Delete List</div>
       </div>
       <img
         className={"arrow " + (isActive ? "arrow-active" : "")}

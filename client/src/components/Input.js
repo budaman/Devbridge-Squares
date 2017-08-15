@@ -3,6 +3,7 @@ import Sidebar from './Sidebar'
 import Squares from './Squares'
 import SaveList from './SaveList'
 import LoadCoord from './LoadCoord'
+import DeleteList from './DeleteList'
 
 
 class Input extends Component {
@@ -22,7 +23,8 @@ class Input extends Component {
     squares: [],
     squaresOn: false,
     saveList: false,
-    loadList: false
+    loadList: false,
+    deleteList: false
   }
 
   componentDidMount() {
@@ -252,6 +254,15 @@ class Input extends Component {
        .then(coord => this.setState({ loadCoord: coord }));
   }
 
+  deleteList = ()=> {
+    this.setState({
+      deleteList: !this.state.deleteList
+    })
+    fetch('/users')
+       .then(res => res.json())
+       .then(coord => this.setState({ loadCoord: coord }));
+  }
+
   loadId = (id) => {
     let loadCoord = this.state.loadCoord
 
@@ -269,7 +280,7 @@ class Input extends Component {
 
   render() {
 
-    const { coord, currentPage, todosPerPage, correctType, duplicate, saveList, loadList } = this.state
+    const { coord, currentPage, todosPerPage, correctType, duplicate, saveList, loadList, deleteList } = this.state
 
     //checking if output type is correct
 
@@ -438,6 +449,8 @@ class Input extends Component {
               countSquares={this.countSquares}
               saveList={this.saveList}
               loadList={this.loadList}
+              deleteList={this.deleteList}
+
              />
       <Squares
         squaresOn={this.state.squaresOn}
@@ -446,6 +459,7 @@ class Input extends Component {
        />
       { saveList && <SaveList
         saveList={this.saveList}
+        loadCoord={this.state.coord}
         coord={this.state.coord}
       />}
       { loadList && <LoadCoord
@@ -453,6 +467,10 @@ class Input extends Component {
         loadCoord={this.state.loadCoord}
         loadId={this.loadId}
       /> }
+      { deleteList && <DeleteList
+        loadCoord={this.state.loadCoord}
+        deleteList={this.deleteList}
+      />}
       </div>
     );
   }

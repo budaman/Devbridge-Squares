@@ -20,8 +20,7 @@ class DeleteList extends Component {
   })
   .then(res => {
     if (res.ok) return res.json()
-  }).
-  then(data => {
+  }).then(data => {
     console.log(data)
   })
     this.props.deleteList()

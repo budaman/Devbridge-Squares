@@ -10,7 +10,7 @@
 .App {
   margin: 0;
   padding: 0;
-background-image: linear-gradient(-20deg, #d558c8 0%, #24d292 100%);
+  background-image: linear-gradient(-20deg, #d558c8 0%, #24d292 100%);
   position: fixed;
   width: 100vw;
   height: 100vh;
@@ -19,7 +19,6 @@ background-image: linear-gradient(-20deg, #d558c8 0%, #24d292 100%);
 
 
 /* Title */
-
 .title {
   display: flex;
   width: 100vw;
@@ -49,7 +48,6 @@ background-image: linear-gradient(-20deg, #d558c8 0%, #24d292 100%);
   display: flex;
   justify-content: center;
 }
-
 /* Title ends */
 
 /* Input */
@@ -91,7 +89,6 @@ background-image: linear-gradient(-20deg, #d558c8 0%, #24d292 100%);
 /* Input Ends*/
 
 /* list */
-
 .listOfCoord {
   position: absolute;
   top: 200px;
@@ -220,7 +217,6 @@ ul {
   justify-content: center;
   align-items: center;
 }
-
 /* Liest Ends */
 
 /* Pagination*/
@@ -268,7 +264,12 @@ ul {
 }
 
 .sidebarCont div {
+  display: flex;
+  justify-content: center;
   margin: 5px;
+  background-color: #3EC09A;
+  width: 80%;
+  padding: 3px;
   font-size: 1.2rem;
   cursor: pointer;
 }
@@ -288,7 +289,6 @@ ul {
   top: 0;
   width: 200px;
   height: 100vh;
-  border-right: 1px solid black;
 }
 
 .arrow-active {
@@ -414,7 +414,6 @@ ul {
 /* Load list ends */
 
 /* Save List */
-
 .saveCont {
   display: flex;
   justify-content: center;
@@ -434,5 +433,29 @@ ul {
 .saveCont input {
   width: 150px;
 }
-
 /* Save List ends */
+
+/* Counting */
+.counting {
+  position: absolute;
+  right: 80px;
+  bottom: 50px;
+  background-color: #3EC09A;
+  color: white;
+  border-radius: 2px;
+}
+
+.counting h5 {
+  padding: 5px;
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.counting p {
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  padding: 3px;
+  font-size: 1rem;
+}
+/* Counting Ends */

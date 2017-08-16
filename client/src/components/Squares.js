@@ -81,7 +81,7 @@ class Squares extends Component {
         <div className="squaresCont">
           {noneSquares &&
             <div className="notFound">
-              Any square was not found yet
+              Nothing was found
            </div>}
            {!noneSquares && <div>Number of squares: {numberOfSquares}</div>}
            {!noneSquares &&

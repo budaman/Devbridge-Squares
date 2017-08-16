@@ -4,7 +4,8 @@ import React, { Component } from 'react'
 class SaveList extends Component {
 
     state = {
-      name: ''
+      name: '',
+      nameEmpty: false
     }
 
     saveList = () => {
@@ -19,7 +20,7 @@ class SaveList extends Component {
     }
 
     handlePost = () =>{
-       if (this.props.coord.length !== 0 && this.state.name !== ''){
+       if (this.state.name !== ''){
         fetch('coord', {
             method: 'put',
            headers: {'Content-Type': 'application/json'},
@@ -28,12 +29,16 @@ class SaveList extends Component {
               coord: this.props.coord
             })
         })
-
-
-
-        alert('List saved as' + this.state.name)
+        alert('List saved as ' + this.state.name)
+        this.setState({
+          nameEmpty: false
+        })
         this.props.saveList()
-     } else alert('not everething is filled')
+     } else {
+       this.setState({
+         nameEmpty: true
+       })
+     }
     }
 
     render() {
@@ -53,6 +58,7 @@ class SaveList extends Component {
       <button
         onClick={this.handlePost}
         >Save</button>
+        { this.state.nameEmpty && <p className="warning">Enter list name</p>}
       </div> }
       <div
          className="closeTab"

@@ -4,9 +4,10 @@ import Squares from './Squares'
 import SaveList from './SaveList'
 import LoadCoord from './LoadCoord'
 import DeleteList from './DeleteList'
+import Counting from './Counting'
 
 
-class Input extends Component {
+class Main extends Component {
   state = {
     xValue: "",
     yValue: "",
@@ -27,18 +28,21 @@ class Input extends Component {
     deleteList: false
   }
 
+//getting coords from mongo
   componentDidMount() {
     fetch('/users')
        .then(res => res.json())
        .then(coord => this.setState({ loadCoord: coord }));
   }
 
+//getting uploaded coords
   getUplCoord = (coord) => {
      this.setState({
        coord: coord
      })
   }
 
+//downloading file
   downloadTxtFile = () => {
     let element = document.createElement("a");
     let output = ''
@@ -53,6 +57,8 @@ class Input extends Component {
     element.click();
   }
 
+
+//counting squares
   countSquares = () =>{
     let coord = this.state.coord
     let squares = []
@@ -122,16 +128,20 @@ class Input extends Component {
       })
     }
   }
+//opening squares page
+  handleClose = (onClose)=> {
+    this.setState({
+      squaresOn: onClose
+    })
+  }
 
+//validating input value
   handleChange = (e)=> {
     let id = e.target.id
     let value
     let isItInt = true
     let isNotNaN = true
-
     this.setState({duplicate: false})
-
-
 
     if (e.target.value.indexOf('.') >= 0)  {
       isItInt = false
@@ -155,7 +165,7 @@ class Input extends Component {
                 })
         }
   }
-
+//submiting new coord
   handleClick = () => {
     let coord = this.state.coord;
     let id = this.state.xValue + "" + this.state.yValue
@@ -175,9 +185,9 @@ class Input extends Component {
       xValue: "",
       yValue: ""
     })
-
   }
 
+//removing point
   handleRemove = (id) => {
     let coord = this.state.coord
     let i = coord.find(list => {
@@ -190,8 +200,8 @@ class Input extends Component {
     })
   }
 
+  //sorting content
   popUpSort = (e) => {
-
     if(e.currentTarget.id === 'sort')
     {
     this.setState({popUpSort:!this.state.popUpSort})
@@ -200,9 +210,7 @@ class Input extends Component {
     if(e.currentTarget.id === 'display') {
       this.setState({popUpDisplay: !this.state.popUpDisplay})
     }
-
   }
-
   handleSort = (e) => {
     if(e.currentTarget.id==='xSort') {
       let sort = this.state.coord
@@ -215,6 +223,7 @@ class Input extends Component {
         }
     }
 
+    //paginated list functions
     handlePageId = (e) => {
     let number = (parseInt(e.currentTarget.id,10))
       this.setState({currentPage: number})
@@ -229,22 +238,13 @@ class Input extends Component {
       })
     }
 
-    handleClose = (onClose)=> {
-      this.setState({
-        squaresOn: onClose
-      })
-    }
-
-    saveList = ()=>{
-      console.log('labas')
-    }
-
+//toggle of save list
   saveList = () => {
     this.setState({
       saveList: !this.state.saveList
     })
   }
-
+//toggle of load list + loading again fromd database if any change
   loadList = () => {
     this.setState({
       loadList: !this.state.loadList
@@ -254,15 +254,7 @@ class Input extends Component {
        .then(coord => this.setState({ loadCoord: coord }));
   }
 
-  deleteList = ()=> {
-    this.setState({
-      deleteList: !this.state.deleteList
-    })
-    fetch('/users')
-       .then(res => res.json())
-       .then(coord => this.setState({ loadCoord: coord }));
-  }
-
+//checking id of picked loading item
   loadId = (id) => {
     let loadCoord = this.state.loadCoord
 
@@ -277,14 +269,22 @@ class Input extends Component {
     })
   }
 
+//toggle delete func + reloading list in any change case
+  deleteList = ()=> {
+    this.setState({
+      deleteList: !this.state.deleteList
+    })
+    fetch('/users')
+       .then(res => res.json())
+       .then(coord => this.setState({ loadCoord: coord }));
+  }
 
   render() {
 
+    //importing states
     const { coord, currentPage, todosPerPage, correctType, duplicate, saveList, loadList, deleteList } = this.state
 
     //checking if output type is correct
-
-
     let alert = false
     let addButton = false
     let maxLimit = false;
@@ -312,7 +312,6 @@ class Input extends Component {
     }
 
     //logic of paginated list
-
     const indexOfLastCoord = currentPage * todosPerPage
     const indexOfFirstCoord = indexOfLastCoord- todosPerPage
     const currentCoord = coord.slice(indexOfFirstCoord, indexOfLastCoord)
@@ -321,7 +320,7 @@ class Input extends Component {
     for (let i = 1; i <= Math.ceil(coord.length / todosPerPage); i++) {
       pageNumbers.push(i);
     }
-
+    //logic of paginated page pages
     const renderPageNumbers = pageNumbers.map((number, i) => {
       if(currentPage-6<i && currentPage+4> i) {
         return (
@@ -336,13 +335,10 @@ class Input extends Component {
         )
       }
     })
-
+    //renering list logic
     const list = currentCoord.map((list,id)=>{
       return (
-        <li
-          key={list.id}
-          className="listCont"
-          >
+        <li key={list.id} className="listCont">
           <span className="Col">{"x: " + list.x}</span>
           <span className="Col">{"y: " + list.y}</span>
           <button
@@ -353,12 +349,12 @@ class Input extends Component {
         </li>
     )
     })
+
       return (
       <div className="input-cont">
+          {(coord.length>0) && <Counting coord={coord.length} /> }
           <div className="input-field">
-          <label
-            htmlFor="x"
-          > X: </label>
+          <label htmlFor="x"> X: </label>
           <input
             id="x"
             type="number"
@@ -366,9 +362,7 @@ class Input extends Component {
             onChange={this.handleChange}
             value={this.state.xValue}
           />
-            <label
-              htmlFor="y"
-            > Y: </label>
+            <label htmlFor="y"> Y: </label>
           <input
             id="y"
             type="number"
@@ -394,46 +388,22 @@ class Input extends Component {
             id="sort"
             onClick={this.popUpSort}
             >
-            <div
-              className={"sort-x " + (this.state.popUpSort ? 'sort-x-active' : "")} >
-              <div
-                id="xSort"
-                onClick={this.handleSort}  >
-                X</div>
-              <div
-                id="ySort"
-                onClick={this.handleSort}>
-                Y</div>
+            <div className={"sort-x " + (this.state.popUpSort ? 'sort-x-active' : "")} >
+              <div id="xSort" onClick={this.handleSort}>X</div>
+              <div id="ySort" onClick={this.handleSort}>Y</div>
             </div>
-            <div
-              >
-            Sort By
-            </div>
+            <div>Sort By</div>
           </div>
           <div
             className="sort"
             id="display"
             onClick={this.popUpSort}
             >Display </div>
-            <div
-              className={"display " + (this.state.popUpDisplay  ? 'display-active' : "") }
-              >
-              <div
-                id="5"
-                onClick={this.handleDisplay}
-                >5</div>
-              <div
-                id="10"
-                onClick={this.handleDisplay}
-                >10</div>
-              <div
-                id="20"
-                onClick={this.handleDisplay}
-                >20</div>
-              <div
-                id="50"
-                onClick={this.handleDisplay}
-                >50</div>
+            <div className={"display " + (this.state.popUpDisplay  ? 'display-active' : "") }>
+              <div id="5" onClick={this.handleDisplay}>5</div>
+              <div id="10" onClick={this.handleDisplay}>10</div>
+              <div id="20" onClick={this.handleDisplay}>20</div>
+              <div id="50" onClick={this.handleDisplay}>50</div>
              </div>
           </div>
           <ul className="ul-list">
@@ -459,7 +429,6 @@ class Input extends Component {
        />
       { saveList && <SaveList
         saveList={this.saveList}
-        loadCoord={this.state.coord}
         coord={this.state.coord}
       />}
       { loadList && <LoadCoord
@@ -476,4 +445,4 @@ class Input extends Component {
   }
 }
 
-export default Input;
+export default Main;

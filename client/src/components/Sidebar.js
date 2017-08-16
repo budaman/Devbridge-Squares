@@ -6,19 +6,19 @@ class Sidebar extends Component {
     isActive: false
   }
 
+  //toggle sidebar
   handleClick = () => {
     this.setState({isActive: !this.state.isActive})
   }
 
+  //uploading file
   openFile = (e) => {
     let input = e.target
-
     let coord = []
     let reader = new FileReader()
       reader.onload = function(e){
         let text = reader.result
         let textInput = text.split(/\r\n|\n/)
-
         let array = textInput.map((num)=>{
             return num.split(/(\s+)/)
           })
@@ -33,7 +33,7 @@ class Sidebar extends Component {
               alert('Interval of numbers shoud be in between -5000 and 5000. Error line: ' + num)
               return 0
             }
-            if( !xInt && !yInt ){ //num[1]===" " &&
+            if(num[1]===" " && !xInt && !yInt ){
             let id = num[0] + num[2]
             let duplicate = false;
             duplicate = coord.find((co)=>{
@@ -44,7 +44,6 @@ class Sidebar extends Component {
               return 0
             }
             if(coord.length > 9999) {
-              // alert('Limit of points is 10 000')
               return 0
             }
               coord.push({x: x, y: y, id: id})
@@ -64,7 +63,9 @@ class Sidebar extends Component {
     };
       reader.readAsText(input.files[0])
   }
-
+  //simple clearing points function
+  //clearing points and uploading does not have any rendering html content
+  //so all the logic is here inside sidebar and not seperated as others
   clearPoints = () => {
     let coord = []
     this.props.getUplCoord(
@@ -72,31 +73,29 @@ class Sidebar extends Component {
     )
   }
 
+//calling dowloading to the main
   downloadTxtFile = () => {
     this.props.downloadTxtFile()
   }
-
+//calling counting to the main
   countSquares = () => {
     this.props.countSquares()
   }
-
+//calling saving to the main
   saveList = () => {
     this.props.saveList()
   }
-
+//calling loading to the main
   loadList = () => {
     this.props.loadList()
   }
-
+//calling deleting to the main
   deleteList = () => {
     this.props.deleteList()
   }
 
 
   render() {
-
-
-
     const { isActive} = this.state
     return (
       <div>
@@ -107,28 +106,14 @@ class Sidebar extends Component {
            className='fileInput'
            onChange={this.openFile}
            onClick={this.handleClose}
-
          />
         </div>
-        <div
-          onClick={this.downloadTxtFile}
-          >Donwload</div>
-        <div
-          onClick={this.countSquares}
-          >Show Squares</div>
-        <div
-          onClick={this.clearPoints}
-          >Clear Points</div>
-          <div
-            onClick={this.saveList}
-            >Save List</div>
-          <div
-            onClick={this.loadList}
-            >Load List
-          </div>
-          <div
-            onClick={this.deleteList}
-            >Delete List</div>
+        <div onClick={this.downloadTxtFile}>Donwload</div>
+        <div onClick={this.clearPoints}>Clear Points</div>  
+        <div onClick={this.countSquares}>Show Squares</div>
+          <div onClick={this.saveList}>Save List</div>
+          <div onClick={this.loadList}>Load List</div>
+          <div onClick={this.deleteList}>Delete List</div>
       </div>
       <img
         className={"arrow " + (isActive ? "arrow-active" : "")}

@@ -16,15 +16,6 @@ router.get('/', function(req, res, next) {
 });
 
 
-// router.post('/coord', (req, res) => {
-//    db.collection('coord').save(req.body, (err, result) => {
-//      if (err) return console.log(err)
-//
-//      console.log('saved to database')
-//      res.redirect('/')
-//    })
-// })
-
 router.put('/coord', (req, res) => {
   db.collection('coord')
   .findOneAndUpdate({name: req.body.name}, {
@@ -49,11 +40,7 @@ router.delete('/coord', (req, res) => {
   })
 })
 
-router.post('/lists', (req, res) => {
-  repo.addList(req.body, (err, data) => {
-    repo.defaultCb(res, err, data, _io);
-  });
-});
+
 
 
 module.exports = router;

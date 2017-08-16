@@ -352,13 +352,17 @@ ul {
 }
 
 .displaySq div {
+  background-color: #3EC09A;
   width: 30px;
   display: flex;
   justify-content: center;
   cursor: pointer;
+  border-radius: 1px;
+  margin: 2px;
 }
 
 .square-list {
+
   color: black;
   width: 720px;
   height: 400px;
@@ -380,6 +384,7 @@ ul {
 
 #sq-page-numbers {
   font-size: 1rem;
+
   color: black;
   cursor: pointer;
   display: flex;
@@ -392,11 +397,14 @@ ul {
 }
 
 #sq-page-numbers li {
+  background-color: #3EC09A;
+  color: white;
   font-size: 0.9rem;
   width: 40px;
   margin: 0 2px;
   display: flex;
   justify-content: center;
+  border-radius: 2px;
 }
 /* Squares Ends */
 

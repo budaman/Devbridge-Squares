@@ -57,7 +57,7 @@ class DeleteList extends Component {
 
          </div>}
       </div>
-    );
+    )
   }
 }
 

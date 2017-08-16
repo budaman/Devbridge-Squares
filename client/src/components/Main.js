@@ -32,7 +32,7 @@ class Main extends Component {
   componentDidMount() {
     fetch('/users')
        .then(res => res.json())
-       .then(coord => this.setState({ loadCoord: coord }));
+       .then(coord => this.setState({ loadCoord: coord }))
   }
 
 //getting uploaded coords
@@ -44,17 +44,17 @@ class Main extends Component {
 
 //downloading file
   downloadTxtFile = () => {
-    let element = document.createElement("a");
+    let element = document.createElement("a")
     let output = ''
     this.state.coord.forEach((item) => {
       output += item.x + ' ' + item.y + '\r\n'
-    });
+    })
 
     let file = new Blob([
-      output], {type: 'text/plain'});
-    element.href = URL.createObjectURL(file);
-    element.download = "listOfpoints.txt";
-    element.click();
+      output], {type: 'text/plain'})
+    element.href = URL.createObjectURL(file)
+    element.download = "listOfpoints.txt"
+    element.click()
   }
 
 
@@ -68,7 +68,7 @@ class Main extends Component {
     })
 
     for (let i =0; i<coord.length; i++) {
-      var duplicate = false
+      let duplicate = false
       coord.forEach(co=>{
         if(coord[i].y === co.y && coord[i].id !== co.id) {
           let p1 = coord[i]
@@ -151,7 +151,7 @@ class Main extends Component {
     if(isItInt===true && isNotNaN ===true) {
       this.setState({correctType: true})
       this.setState(()=>{
-               let newState = {};
+               let newState = {}
                newState[id + 'Value'] = value
                return newState
             })
@@ -159,7 +159,7 @@ class Main extends Component {
         else {
           this.setState({correctType: false})
           this.setState(()=>{
-                   let newState = {};
+                   let newState = {}
                    newState[id + 'Value'] = ""
                    return newState
                 })
@@ -167,9 +167,9 @@ class Main extends Component {
   }
 //submiting new coord
   handleClick = () => {
-    let coord = this.state.coord;
+    let coord = this.state.coord
     let id = this.state.xValue + "" + this.state.yValue
-    let duplicate = false;
+    let duplicate = false
     duplicate = coord.find((co)=>{
       return co.id === id
     })
@@ -251,7 +251,7 @@ class Main extends Component {
     })
     fetch('/users')
        .then(res => res.json())
-       .then(coord => this.setState({ loadCoord: coord }));
+       .then(coord => this.setState({ loadCoord: coord }))
   }
 
 //checking id of picked loading item
@@ -276,7 +276,7 @@ class Main extends Component {
     })
     fetch('/users')
        .then(res => res.json())
-       .then(coord => this.setState({ loadCoord: coord }));
+       .then(coord => this.setState({ loadCoord: coord }))
   }
 
   render() {
@@ -287,7 +287,7 @@ class Main extends Component {
     //checking if output type is correct
     let alert = false
     let addButton = false
-    let maxLimit = false;
+    let maxLimit = false
 
     if((Math.abs(this.state.xValue) > 5000) ||
     (Math.abs(this.state.yValue) > 5000) )
@@ -298,7 +298,7 @@ class Main extends Component {
     }
 
     if(coord.length > 9999) {
-      maxLimit = true;
+      maxLimit = true
     }
 
     if(alert===false && correctType ===true &&  this.state.xValue!=="" && this.state.yValue !=="" && maxLimit ===false) {
@@ -316,9 +316,9 @@ class Main extends Component {
     const indexOfFirstCoord = indexOfLastCoord- todosPerPage
     const currentCoord = coord.slice(indexOfFirstCoord, indexOfLastCoord)
 
-    const pageNumbers = [];
+    const pageNumbers = []
     for (let i = 1; i <= Math.ceil(coord.length / todosPerPage); i++) {
-      pageNumbers.push(i);
+      pageNumbers.push(i)
     }
     //logic of paginated page pages
     const renderPageNumbers = pageNumbers.map((number, i) => {
@@ -441,8 +441,8 @@ class Main extends Component {
         deleteList={this.deleteList}
       />}
       </div>
-    );
+    )
   }
 }
 
-export default Main;
+export default Main

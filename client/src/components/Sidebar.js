@@ -35,7 +35,7 @@ class Sidebar extends Component {
             }
             if(num[1]===" " && !xInt && !yInt ){
             let id = num[0] + num[2]
-            let duplicate = false;
+            let duplicate = false
             duplicate = coord.find((co)=>{
               return co.id === id
             })
@@ -50,7 +50,7 @@ class Sidebar extends Component {
           } else alert('Incorrect input. Error line: ' + num)
           return 1
           })
-      };
+      }
 
    reader.onloadend = (e) => {
       this.props.getUplCoord(
@@ -59,8 +59,8 @@ class Sidebar extends Component {
       input.value = ''
    }
     reader.onerror = (evt) => {
-        alert(evt.target.error.name);
-    };
+        alert(evt.target.error.name)
+    }
       reader.readAsText(input.files[0])
   }
   //simple clearing points function
@@ -109,7 +109,7 @@ class Sidebar extends Component {
          />
         </div>
         <div onClick={this.downloadTxtFile}>Donwload</div>
-        <div onClick={this.clearPoints}>Clear Points</div>  
+        <div onClick={this.clearPoints}>Clear Points</div>
         <div onClick={this.countSquares}>Show Squares</div>
           <div onClick={this.saveList}>Save List</div>
           <div onClick={this.loadList}>Load List</div>
@@ -122,7 +122,7 @@ class Sidebar extends Component {
         onClick={this.handleClick}
        />
     </div>
-    );
+    )
   }
 }
 

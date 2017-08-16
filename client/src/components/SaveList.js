@@ -65,7 +65,7 @@ class SaveList extends Component {
          onClick={this.saveList}
          >X</div>
     </div>
-    );
+    )
   }
 }
 

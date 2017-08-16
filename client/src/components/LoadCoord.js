@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 
 class LoadCoord extends Component {
 
@@ -42,8 +42,8 @@ loadList = ()=> {
 
          </div>}
       </div>
-    );
+    )
   }
 }
 
-export default LoadCoord;
+export default LoadCoord

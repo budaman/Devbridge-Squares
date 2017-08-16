@@ -3,12 +3,12 @@ import React, { Component } from 'react'
 
 class Squares extends Component {
 
-
   state = {
     currentPage: 1,
     todosPerPage: 5
   }
 
+  //pagination of squares
   handleDisplay = (e) => {
     let display = e.currentTarget.id
     this.setState({
@@ -22,6 +22,8 @@ class Squares extends Component {
     this.setState({currentPage: number})
   }
 
+
+//closing page
   closeTab = ()=> {
     this.props.handleClose(false)
   }
@@ -36,12 +38,13 @@ class Squares extends Component {
       noneSquares = false
     }
 
+    //pagination
     const indexOfLastCoord = currentPage * todosPerPage
     const indexOfFirstCoord = indexOfLastCoord- todosPerPage
     const currentSquare = allSquares.slice(indexOfFirstCoord, indexOfLastCoord)
-    const pageNumbers = [];
+    const pageNumbers = []
     for (let i = 1; i <= Math.ceil(allSquares.length / todosPerPage); i++) {
-      pageNumbers.push(i);
+      pageNumbers.push(i)
     }
 
     const renderPageNumbers = pageNumbers.map((number, i) => {
@@ -112,7 +115,7 @@ class Squares extends Component {
         </div>
       </div>}
     </div>
-    );
+    )
   }
 }
 
